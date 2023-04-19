@@ -15,6 +15,11 @@ namespace VirtoCommerce.Platform.Core.Common
             return $"20000000000000_Update{moduleName.Replace(".", "").Replace("VirtoCommerce", "")}V2";
         }
 
+        public static string GetFixUpdatedV2MigrationName(string moduleName)
+        {
+            return $"20000000000001_FixUpdated{moduleName.Replace(".", "").Replace("VirtoCommerce", "")}V2";
+        }
+
         [Obsolete("use GetUpdateV2MigrationName")]
         public static string GetUpdateV2MigrationNameByOwnerName(string moduleName, string ownerName)
         {

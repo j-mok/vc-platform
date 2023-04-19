@@ -30,13 +30,21 @@ namespace VirtoCommerce.Platform.Web.Migrations
             using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
             {
                 var platformDbContext = serviceScope.ServiceProvider.GetRequiredService<PlatformDbContext>();
-                if(databaseProvider == "SqlServer")
+                if (databaseProvider == "SqlServer")
+                {
                     platformDbContext.Database.MigrateIfNotApplied(MigrationName.GetUpdateV2MigrationName("Platform"));
+                    platformDbContext.Database.ApplyPatchMigration(MigrationName.GetFixUpdatedV2MigrationName("Platform"));
+                }
+
                 platformDbContext.Database.Migrate();
 
                 var securityDbContext = serviceScope.ServiceProvider.GetRequiredService<SecurityDbContext>();
                 if (databaseProvider == "SqlServer")
+                {
                     securityDbContext.Database.MigrateIfNotApplied(MigrationName.GetUpdateV2MigrationName("Security"));
+               //     platformDbContext.Database.ApplyPatchMigration(MigrationName.GetFixUpdatedV2MigrationName("Security"));
+                }
+
                 securityDbContext.Database.Migrate();
             }
 
